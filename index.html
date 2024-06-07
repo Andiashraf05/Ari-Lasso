@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Musik Kesukaanmu </title>
+    <style>
+        #lyrics-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        #lyrics {
+            position: absolute;
+            top: 20%;
+            transform: translateX(-50%);
+            left: 50%;
+            width: 85%;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: white;
+            text-align: center;
+            font-style: italic;
+            font-display: swap;
+            font-size: 24px;
+            white-space: nowrap;
+        }
+
+        @keyframes moveText {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body background="assets/Al.jpg">
+    <h1 style="color: white; text-align: center;">Ari Lasso-Cinta Terakhir</h1>
+
+    <audio id="myAudio" controls>
+        <source src="assets/cinta terakhir.mp3" type="audio/mp3">
+        Maaf, Browser Anda tidak mendukung pemutar musik ini.
+    </audio>
+
+    <div id="lyrics-container">
+        <div id="lyrics"> Mari Bernyanyi Bersama </div>
+    </div>
+
+    <script>
+        var audio = document.getElementById("myAudio");
+        var lyricsText = document.getElementById("lyrics");
+        var lyrics = [
+            { time: 1, text: "Hoo" },
+            { time: 4, text: "Kini" },
+            { time: 8, text: "Usai sudah" },
+            { time: 12, text: "Segala penatian panjangku" },
+            { time: 16, text: "Setelah temukan dirimu" },
+            { time: 20, text: "Duhai kekasihku" },
+            { time: 24, text: "Hanya di hatimu" },
+            { time: 28, text: "Akan ku labukan hidupku" },
+            { time: 32, text: "Karena kau lah cinta terakhirku" }
+        ];
+
+        audio.addEventListener("timeupdate", function() {
+            for (var i = 0; i < lyrics.length; i++) {
+                if (audio.currentTime >= lyrics[i].time && (i == lyrics.length - 1 || audio.currentTime < lyrics[i + 1].time)) {
+                    lyricsText.innerHTML = lyrics[i].text;
+                    var animationDuration = (lyrics[i + 1] ? lyrics[i + 1].time : audio.duration) - lyrics[i].time;
+                    lyricsText.style.animation = `moveText ${animationDuration}s linear`;
+                    break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
